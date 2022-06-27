@@ -31,22 +31,7 @@ class FlutterandroidutilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
         } else if (call.method == "isAccessibilityEnabled") {
             val className = call.argument<String>("serviceClassName")
-            if (className != null) {
-                try {
-                    val accessibilityService = Class.forName(className)
-                    result.success(
-                        Utils.isAccessibilityServiceEnabled(
-                            mContext,
-                            accessibilityService
-                        )
-                    )
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    result.success(false)
-                }
-            } else {
-                result.success(false)
-            }
+            result.success(Utils.isAccessibilityServiceEnabled(mContext, className))
         } else {
             result.notImplemented()
         }

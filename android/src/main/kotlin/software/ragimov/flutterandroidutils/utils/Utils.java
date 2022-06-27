@@ -7,6 +7,22 @@ import android.text.TextUtils;
 
 public class Utils {
 
+    public static boolean isAccessibilityServiceEnabled(Context context, String accessibilityServiceName) {
+        if (accessibilityServiceName != null) {
+            try {
+                Class<?> accessibilityService = Class.forName(accessibilityServiceName);
+                return isAccessibilityServiceEnabled(
+                        context,
+                        accessibilityService
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
+
     public static boolean isAccessibilityServiceEnabled(Context context, Class<?> accessibilityService) {
         try {
             ComponentName expectedComponentName = new ComponentName(context, accessibilityService);
