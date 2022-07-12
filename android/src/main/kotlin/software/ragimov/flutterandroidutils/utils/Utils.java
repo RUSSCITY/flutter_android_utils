@@ -5,6 +5,8 @@ import android.content.Context;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import java.lang.reflect.Method;
+
 public class Utils {
 
     public static boolean isAccessibilityServiceEnabled(Context context, String accessibilityServiceName) {
@@ -46,6 +48,18 @@ public class Utils {
             e.printStackTrace();
         }
 
+        return false;
+    }
+
+    public static boolean isScreenAccessProvided(Context context) {
+        try {
+            Context mainApplicationContext = context.getApplicationContext();
+            Method m = context.getApplicationContext().getClass().getMethod("getMediaIntent");
+            Object rv = m.invoke(mainApplicationContext);
+            return rv != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }

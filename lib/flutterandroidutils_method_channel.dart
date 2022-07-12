@@ -22,4 +22,11 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
         'isAccessibilityEnabled', {'serviceClassName': className});
     return isProvided ?? false;
   }
+
+  @override
+  Future<bool> isScreenAccessProvided() async {
+    final isProvided =
+        await methodChannel.invokeMethod<bool>('isScreenAccessProvided');
+    return isProvided ?? false;
+  }
 }

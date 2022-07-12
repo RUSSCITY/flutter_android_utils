@@ -18,6 +18,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   bool? _accessibilityProvided;
+  bool? _isScreenAccessProvided;
 
   final _flutterandroidutilsPlugin = Flutterandroidutils();
 
@@ -31,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     String platformVersion;
     bool accesibilityProvided;
+    bool isScreenAccessProvided;
 
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
@@ -42,11 +44,20 @@ class _MyAppState extends State<MyApp> {
     }
 
     try {
-      accesibilityProvided = await _flutterandroidutilsPlugin
-          .isAccessibilityServiceProvided("software.ragimov.flutterandroidutils_example.MainActivity");
+      accesibilityProvided =
+          await _flutterandroidutilsPlugin.isAccessibilityServiceProvided(
+              "software.ragimov.flutterandroidutils_example.MainActivity");
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
       accesibilityProvided = false;
+    }
+
+    try {
+      isScreenAccessProvided =
+          await _flutterandroidutilsPlugin.isScreenAccessProvided();
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+      isScreenAccessProvided = false;
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -57,6 +68,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _platformVersion = platformVersion;
       _accessibilityProvided = accesibilityProvided;
+      _isScreenAccessProvided = isScreenAccessProvided;
     });
   }
 
@@ -73,7 +85,9 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Running on: $_platformVersion\n'),
-              Text('Is Accessibility Service Provided: $_accessibilityProvided')
+              Text(
+                  'Is Accessibility Service Provided: $_accessibilityProvided'),
+              Text('Is Screen access provided: $_isScreenAccessProvided')
             ],
           ),
         ),

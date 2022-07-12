@@ -1,6 +1,8 @@
 package software.ragimov.flutterandroidutils
 
 import android.content.Context
+import android.os.Handler
+import android.os.ResultReceiver
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -32,6 +34,8 @@ class FlutterandroidutilsPlugin : FlutterPlugin, MethodCallHandler {
         } else if (call.method == "isAccessibilityEnabled") {
             val className = call.argument<String>("serviceClassName")
             result.success(Utils.isAccessibilityServiceEnabled(mContext, className))
+        } else if (call.method == "isScreenAccessProvided") {
+            result.success(Utils.isScreenAccessProvided(mContext))
         } else {
             result.notImplemented()
         }

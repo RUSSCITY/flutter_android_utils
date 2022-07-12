@@ -8,13 +8,14 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static FlutterandroidutilsPlatform _instance = MethodChannelFlutterandroidutils();
+  static FlutterandroidutilsPlatform _instance =
+      MethodChannelFlutterandroidutils();
 
   /// The default instance of [FlutterandroidutilsPlatform] to use.
   ///
   /// Defaults to [MethodChannelFlutterandroidutils].
   static FlutterandroidutilsPlatform get instance => _instance;
-  
+
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [FlutterandroidutilsPlatform] when
   /// they register themselves.
@@ -24,10 +25,16 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
   }
 
   Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+    throw UnimplementedError('getPlatformVersion() has not been implemented.');
   }
 
-  Future<bool> isAccessibilityServiceProvided(String className){
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<bool> isAccessibilityServiceProvided(String className) {
+    throw UnimplementedError(
+        'isAccessibilityServiceProvided() has not been implemented.');
+  }
+
+  Future<bool> isScreenAccessProvided() {
+    throw UnimplementedError(
+        'isScreenAccessProvided() has not been implemented.');
   }
 }
