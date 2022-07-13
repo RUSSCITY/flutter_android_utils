@@ -13,7 +13,7 @@ import software.ragimov.flutterandroidutils_example.MainApplication;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class GetScreenCaptureActivity extends Activity {
-    private static final int CAPTURE_PERMISSION_REQUEST_CODE = 1551;
+    private static final int CAPTURE_PERMISSION_REQUEST_CODE = 1555;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
