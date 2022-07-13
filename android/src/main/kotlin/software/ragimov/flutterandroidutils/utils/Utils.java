@@ -6,6 +6,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 
 import java.lang.reflect.Method;
+import android.content.Intent;
 
 public class Utils {
 
@@ -54,12 +55,25 @@ public class Utils {
     public static boolean isScreenAccessProvided(Context context) {
         try {
             Context mainApplicationContext = context.getApplicationContext();
-            Method m = context.getApplicationContext().getClass().getMethod("getMediaIntent");
+            Method m = mainApplicationContext.getClass().getMethod("getMediaIntent");
             Object rv = m.invoke(mainApplicationContext);
             return rv != null;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean test(Context context) {
+        try {
+            Class[] cArg = new Class[1];
+            cArg[0] = Intent.class;
+            Context mainApplicationContext = context.getApplicationContext();
+            Method m = mainApplicationContext.getClass().getMethod("setMediaIntent", cArg);
+            m.invoke(mainApplicationContext, new Intent());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

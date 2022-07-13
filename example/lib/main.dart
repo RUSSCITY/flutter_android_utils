@@ -28,6 +28,10 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
+  Future sleep(int milliseconds) {
+    return Future.delayed(Duration(milliseconds: milliseconds), () => "1");
+  }
+
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
@@ -68,6 +72,19 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _platformVersion = platformVersion;
       _accessibilityProvided = accesibilityProvided;
+      _isScreenAccessProvided = isScreenAccessProvided;
+    });
+
+    await sleep(2000);
+    _flutterandroidutilsPlugin.test();
+    try {
+      isScreenAccessProvided =
+          await _flutterandroidutilsPlugin.isScreenAccessProvided();
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+      isScreenAccessProvided = false;
+    }
+    setState(() {
       _isScreenAccessProvided = isScreenAccessProvided;
     });
   }

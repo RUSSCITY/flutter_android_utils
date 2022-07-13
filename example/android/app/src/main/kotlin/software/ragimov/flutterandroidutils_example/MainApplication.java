@@ -10,7 +10,6 @@ public class MainApplication extends FlutterApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        setMediaIntent(new Intent());
     }
 
     public void setMediaIntent(Intent intent) {

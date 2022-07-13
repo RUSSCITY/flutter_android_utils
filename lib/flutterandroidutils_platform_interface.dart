@@ -37,4 +37,9 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
     throw UnimplementedError(
         'isScreenAccessProvided() has not been implemented.');
   }
+
+  Future<bool> test() {
+    throw UnimplementedError(
+        'isScreenAccessProvided() has not been implemented.');
+  }
 }
