@@ -64,6 +64,18 @@ public class Utils {
         return false;
     }
 
+    public static boolean requestScreenAccess(Context context) {
+        try {
+            Context mainApplicationContext = context.getApplicationContext();
+            Method m = mainApplicationContext.getClass().getMethod("requestVideoIntent");
+            Object rv = m.invoke(mainApplicationContext);
+            return rv != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static boolean test(Context context) {
         try {
             Class[] cArg = new Class[1];

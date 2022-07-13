@@ -31,6 +31,13 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
+  Future<bool> requestScreenAccess() async {
+    final isProvided =
+    await methodChannel.invokeMethod<bool>('requestScreenAccess');
+    return isProvided ?? false;
+  }
+
+  @override
   Future<bool> test() async {
     final isProvided =
     await methodChannel.invokeMethod<bool>('test');

@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String _platformVersion = 'Unknown';
   bool? _accessibilityProvided;
   bool? _isScreenAccessProvided;
@@ -25,7 +25,21 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     initPlatformState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      initPlatformState();
+    }
   }
 
   Future sleep(int milliseconds) {
@@ -74,19 +88,6 @@ class _MyAppState extends State<MyApp> {
       _accessibilityProvided = accesibilityProvided;
       _isScreenAccessProvided = isScreenAccessProvided;
     });
-
-    await sleep(2000);
-    _flutterandroidutilsPlugin.test();
-    try {
-      isScreenAccessProvided =
-          await _flutterandroidutilsPlugin.isScreenAccessProvided();
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-      isScreenAccessProvided = false;
-    }
-    setState(() {
-      _isScreenAccessProvided = isScreenAccessProvided;
-    });
   }
 
   @override
@@ -104,7 +105,12 @@ class _MyAppState extends State<MyApp> {
               Text('Running on: $_platformVersion\n'),
               Text(
                   'Is Accessibility Service Provided: $_accessibilityProvided'),
-              Text('Is Screen access provided: $_isScreenAccessProvided')
+              Text('Is Screen access provided: $_isScreenAccessProvided'),
+              TextButton(
+                  onPressed: () async {
+                    _flutterandroidutilsPlugin.requestScreenAccess();
+                  },
+                  child: Text("REQUEST SCREEN ACCESS")),
             ],
           ),
         ),

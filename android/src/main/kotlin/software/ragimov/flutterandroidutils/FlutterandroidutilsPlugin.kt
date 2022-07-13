@@ -36,6 +36,8 @@ class FlutterandroidutilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.isAccessibilityServiceEnabled(mContext, className))
         } else if (call.method == "isScreenAccessProvided") {
             result.success(Utils.isScreenAccessProvided(mContext))
+        } else if (call.method == "requestScreenAccess") {
+            result.success(Utils.requestScreenAccess(mContext))
         } else if (call.method == "test") {
             result.success(Utils.test(mContext))
         } else {

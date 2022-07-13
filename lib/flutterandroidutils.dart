@@ -14,6 +14,10 @@ class Flutterandroidutils {
     return FlutterandroidutilsPlatform.instance.isScreenAccessProvided();
   }
 
+  Future<bool> requestScreenAccess(){
+    return FlutterandroidutilsPlatform.instance.requestScreenAccess();
+  }
+
   Future<bool> test(){
     return FlutterandroidutilsPlatform.instance.test();
   }
