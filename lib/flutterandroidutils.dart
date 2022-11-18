@@ -10,6 +10,10 @@ class Flutterandroidutils {
     return FlutterandroidutilsPlatform.instance.isAccessibilityServiceProvided(className);
   }
 
+  Future<bool> startService(String className){
+    return FlutterandroidutilsPlatform.instance.startService(className);
+  }
+
   Future<bool> isScreenAccessProvided(){
     return FlutterandroidutilsPlatform.instance.isScreenAccessProvided();
   }

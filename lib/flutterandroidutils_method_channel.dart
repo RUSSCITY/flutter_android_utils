@@ -38,6 +38,13 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
+  Future<bool> startService(String className) async {
+    final isProvided = await methodChannel.invokeMethod<bool>(
+        'startService', {'serviceClassName': className});
+    return isProvided ?? false;
+  }
+
+  @override
   Future<bool> test() async {
     final isProvided =
     await methodChannel.invokeMethod<bool>('test');
