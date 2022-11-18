@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import java.lang.reflect.Method;
 import android.content.Intent;
+import android.os.Build;
 
 public class Utils {
 
@@ -45,6 +46,21 @@ public class Utils {
                     return true;
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static boolean startService(Context context, Class<?> accessibilityService) {
+        try {
+            Intent intent = new Intent(context, accessibilityService);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent);
+            } else {
+                context.startService(intent);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
