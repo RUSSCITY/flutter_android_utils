@@ -53,8 +53,9 @@ public class Utils {
         return false;
     }
 
-    public static boolean startService(Context context, Class<?> accessibilityService) {
+    public static boolean startService(Context context, String accessibilityServiceName) {
         try {
+            Class<?> accessibilityService = Class.forName(accessibilityServiceName);
             Intent intent = new Intent(context, accessibilityService);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent);
