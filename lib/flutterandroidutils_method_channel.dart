@@ -6,7 +6,6 @@ import 'flutterandroidutils_platform_interface.dart';
 /// An implementation of [FlutterandroidutilsPlatform] that uses method channels.
 class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   /// The method channel used to interact with the native platform.
-  @visibleForTesting
   final methodChannel = const MethodChannel('flutterandroidutils');
 
   @override
@@ -24,6 +23,13 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
+  Future<bool> isServiceRunning(String className) async {
+    final isProvided = await methodChannel.invokeMethod<bool>(
+        'isServiceRunning', {'serviceClassName': className});
+    return isProvided ?? false;
+  }
+
+  @override
   Future<bool> isScreenAccessProvided() async {
     final isProvided =
         await methodChannel.invokeMethod<bool>('isScreenAccessProvided');
@@ -33,21 +39,20 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   @override
   Future<bool> requestScreenAccess() async {
     final isProvided =
-    await methodChannel.invokeMethod<bool>('requestScreenAccess');
+        await methodChannel.invokeMethod<bool>('requestScreenAccess');
     return isProvided ?? false;
   }
 
   @override
   Future<bool> startService(String className) async {
-    final isProvided = await methodChannel.invokeMethod<bool>(
-        'startService', {'serviceClassName': className});
+    final isProvided = await methodChannel
+        .invokeMethod<bool>('startService', {'serviceClassName': className});
     return isProvided ?? false;
   }
 
   @override
   Future<bool> test() async {
-    final isProvided =
-    await methodChannel.invokeMethod<bool>('test');
+    final isProvided = await methodChannel.invokeMethod<bool>('test');
     return isProvided ?? false;
   }
 }

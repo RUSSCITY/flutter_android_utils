@@ -52,4 +52,9 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
     throw UnimplementedError(
         'startService() has not been implemented.');
   }
+
+  Future<bool> isServiceRunning(String className) {
+    throw UnimplementedError(
+        'isAccessibilityServiceProvided() has not been implemented.');
+  }
 }
