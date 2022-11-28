@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -23,6 +25,52 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
+  Future<bool> getSharedPreferencesBool(String name, bool defaultValue) async {
+    final isProvided = await methodChannel.invokeMethod<bool>(
+        'getSharedPreferencesBool',
+        {'name': name, 'defaultValue': defaultValue});
+    return isProvided ?? defaultValue;
+  }
+
+  @override
+  Future<int> getSharedPreferencesInt(String name, int defaultValue) async {
+    final isProvided = await methodChannel.invokeMethod<int>(
+        'getSharedPreferencesInt',
+        {'name': name, 'defaultValue': defaultValue});
+    return isProvided ?? defaultValue;
+  }
+
+  @override
+  Future<String> getSharedPreferencesString(
+      String name, String defaultValue) async {
+    final isProvided = await methodChannel.invokeMethod<String>(
+        'getSharedPreferencesString',
+        {'name': name, 'defaultValue': defaultValue});
+    return isProvided ?? defaultValue;
+  }
+
+  @override
+  Future<bool> putSharedPreferencesBool(String name, bool value) async {
+    return await methodChannel.invokeMethod<bool>(
+            'putSharedPreferencesBool', {'name': name, 'value': value}) ??
+        false;
+  }
+
+  @override
+  Future<bool> putSharedPreferencesInt(String name, int value) async {
+    return await methodChannel.invokeMethod<bool>(
+            'putSharedPreferencesInt', {'name': name, 'value': value}) ??
+        false;
+  }
+
+  @override
+  Future<bool> putSharedPreferencesString(String name, String value) async {
+    return await methodChannel.invokeMethod<bool>(
+            'putSharedPreferencesString', {'name': name, 'value': value}) ??
+        false;
+  }
+
+  @override
   Future<bool> isServiceRunning(String className) async {
     final isProvided = await methodChannel.invokeMethod<bool>(
         'isServiceRunning', {'serviceClassName': className});
@@ -40,6 +88,13 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   Future<bool> requestScreenAccess() async {
     final isProvided =
         await methodChannel.invokeMethod<bool>('requestScreenAccess');
+    return isProvided ?? false;
+  }
+
+  @override
+  Future<bool> stopScreenAccess() async {
+    final isProvided =
+    await methodChannel.invokeMethod<bool>('stopScreenAccess');
     return isProvided ?? false;
   }
 

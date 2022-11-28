@@ -5,6 +5,7 @@ import android.content.Context;
 
 import io.flutter.app.FlutterApplication;
 import city.russ.GetScreenCaptureActivity;
+import city.russ.MyUtils;
 
 public class MainApplication extends FlutterApplication {
     Intent mediaIntent;
@@ -12,6 +13,7 @@ public class MainApplication extends FlutterApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        MyUtils.initChannels(this);
     }
 
     public void setMediaIntent(Intent intent) {

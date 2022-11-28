@@ -1,8 +1,13 @@
 package software.ragimov.flutterandroidutils.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 
@@ -17,10 +22,7 @@ public class Utils {
 		if (accessibilityServiceName != null) {
 			try {
 				Class<?> accessibilityService = Class.forName(accessibilityServiceName);
-				return isAccessibilityServiceEnabled(
-						context,
-						accessibilityService
-				);
+				return isAccessibilityServiceEnabled(context, accessibilityService);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
@@ -34,8 +36,7 @@ public class Utils {
 			ComponentName expectedComponentName = new ComponentName(context, accessibilityService);
 
 			String enabledServicesSetting = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-			if (enabledServicesSetting == null)
-				return false;
+			if (enabledServicesSetting == null) return false;
 
 			TextUtils.SimpleStringSplitter colonSplitter = new TextUtils.SimpleStringSplitter(':');
 			colonSplitter.setString(enabledServicesSetting);
@@ -99,6 +100,98 @@ public class Utils {
 			Method m = mainApplicationContext.getClass().getMethod("requestVideoIntent");
 			Object rv = m.invoke(mainApplicationContext);
 			return rv != null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean stopScreenAccess(Context context) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			Method m = mainApplicationContext.getClass().getMethod("getMediaIntent");
+			Object rv = m.invoke(mainApplicationContext);
+			if (rv != null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+				MediaProjectionManager mediaProjectionManager = (MediaProjectionManager) mainApplicationContext.getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+				MediaProjection mediaProjection = mediaProjectionManager.getMediaProjection(Activity.RESULT_OK, (Intent) rv);
+				mediaProjection.stop();
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static Boolean getSharedPreferencesBool(Context context, String name, Boolean defaultValue) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
+			return sharedPreferences.getBoolean(name, defaultValue);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return defaultValue;
+	}
+
+	public static Integer getSharedPreferencesInt(Context context, String name, Integer defaultValue) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
+			return sharedPreferences.getInt(name, defaultValue);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return defaultValue;
+	}
+
+	public static String getSharedPreferencesString(Context context, String name, String defaultValue) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
+			return sharedPreferences.getString(name, defaultValue);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return defaultValue;
+	}
+
+	public static boolean putSharedPreferencesBool(Context context, String name, Boolean value) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
+			SharedPreferences.Editor edit = sharedPreferences.edit();
+			edit.putBoolean(name, value);
+			edit.commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean putSharedPreferencesInt(Context context, String name, Integer value) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
+			SharedPreferences.Editor edit = sharedPreferences.edit();
+			edit.putInt(name, value);
+			edit.commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean putSharedPreferencesString(Context context, String name, String value) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
+			SharedPreferences.Editor edit = sharedPreferences.edit();
+			edit.putString(name, value);
+			edit.commit();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

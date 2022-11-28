@@ -1,19 +1,16 @@
 package software.ragimov.flutterandroidutils
 
 import android.content.Context
-import android.os.Handler
-import android.os.ResultReceiver
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
 import software.ragimov.flutterandroidutils.utils.Utils
 
-/** FlutterandroidutilsPlugin */
-class FlutterandroidutilsPlugin : FlutterPlugin, MethodCallHandler {
+/** FlutterAndroidUtilsPlugin */
+class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var mContext: Context
 
     /// The MethodChannel that will the communication between Flutter and native Android
@@ -28,7 +25,7 @@ class FlutterandroidutilsPlugin : FlutterPlugin, MethodCallHandler {
         mContext = flutterPluginBinding.applicationContext
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
         if (call.method == "getPlatformVersion") {
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
         } else if (call.method == "isAccessibilityEnabled") {
@@ -44,8 +41,34 @@ class FlutterandroidutilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.isScreenAccessProvided(mContext))
         } else if (call.method == "requestScreenAccess") {
             result.success(Utils.requestScreenAccess(mContext))
+        } else if (call.method == "stopScreenAccess") {
+            result.success(Utils.stopScreenAccess(mContext))
         } else if (call.method == "test") {
             result.success(Utils.test(mContext))
+        } else if (call.method == "getSharedPreferencesBool") {
+            val name = call.argument<String>("name")
+            val defaultValue = call.argument<Boolean>("defaultValue")
+            result.success(Utils.getSharedPreferencesBool(mContext, name, defaultValue))
+        } else if (call.method == "getSharedPreferencesInt") {
+            val name = call.argument<String>("name")
+            val defaultValue = call.argument<Int>("defaultValue")
+            result.success(Utils.getSharedPreferencesInt(mContext, name, defaultValue))
+        } else if (call.method == "getSharedPreferencesString") {
+            val name = call.argument<String>("name")
+            val defaultValue = call.argument<String>("defaultValue")
+            result.success(Utils.getSharedPreferencesString(mContext, name, defaultValue))
+        } else if (call.method == "putSharedPreferencesBool") {
+            val name = call.argument<String>("name")
+            val value = call.argument<Boolean>("value")
+            result.success(Utils.putSharedPreferencesBool(mContext, name, value))
+        } else if (call.method == "putSharedPreferencesInt") {
+            val name = call.argument<String>("name")
+            val value = call.argument<Int>("value")
+            result.success(Utils.putSharedPreferencesInt(mContext, name, value))
+        } else if (call.method == "putSharedPreferencesString") {
+            val name = call.argument<String>("name")
+            val value = call.argument<String>("value")
+            result.success(Utils.putSharedPreferencesString(mContext, name, value))
         } else {
             result.notImplemented()
         }

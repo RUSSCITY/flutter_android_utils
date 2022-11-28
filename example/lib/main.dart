@@ -20,13 +20,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool? _accessibilityProvided;
   bool? _isScreenAccessProvided;
 
-  final _flutterandroidutilsPlugin = Flutterandroidutils();
+  // shared preferences
+  int storedInt = 0;
+  String storedString = "";
+  bool storedBool = false;
+
+  final _flutterandroidutilsPlugin = FlutterAndroidUtils();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     initPlatformState();
+    initStoredSharedPreferences();
   }
 
   @override
@@ -90,6 +96,39 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
+  Future<void> initStoredSharedPreferences() async {
+    bool newStoredSharedBool = await FlutterAndroidUtils()
+        .getSharedPreferencesBool("STORED_SHARED_BOOL", false);
+    String newStoredSharedString = await FlutterAndroidUtils()
+        .getSharedPreferencesString("STORED_SHARED_STRING", "NONE");
+    int newStoredSharedInt = await FlutterAndroidUtils()
+        .getSharedPreferencesInt("STORED_SHARED_INT", -1);
+
+    setState(() {
+      storedInt = newStoredSharedInt;
+      storedString = newStoredSharedString;
+      storedBool = newStoredSharedBool;
+    });
+  }
+
+  Future<void> updateValues() async {
+    bool newStoredSharedBool = await FlutterAndroidUtils()
+        .getSharedPreferencesBool("STORED_SHARED_BOOL", false);
+    String newStoredSharedString = await FlutterAndroidUtils()
+        .getSharedPreferencesString("STORED_SHARED_STRING", "NONE");
+    int newStoredSharedInt = await FlutterAndroidUtils()
+        .getSharedPreferencesInt("STORED_SHARED_INT", -1);
+
+    await FlutterAndroidUtils()
+        .putSharedPreferencesBool("STORED_SHARED_BOOL", !newStoredSharedBool);
+    await FlutterAndroidUtils().putSharedPreferencesString(
+        "STORED_SHARED_STRING", "${newStoredSharedString}a");
+    await FlutterAndroidUtils()
+        .putSharedPreferencesInt("STORED_SHARED_INT", newStoredSharedInt + 1);
+
+    initStoredSharedPreferences();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -103,6 +142,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Running on: $_platformVersion\n'),
+              TextButton(
+                  onPressed: () async {
+                    _flutterandroidutilsPlugin
+                        .startService("city.russ.services.MainService");
+                  },
+                  child: Text("START MAIN SERVICE")),
               Text(
                   'Is Accessibility Service Provided: $_accessibilityProvided'),
               Text('Is Screen access provided: $_isScreenAccessProvided'),
@@ -111,6 +156,25 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                     _flutterandroidutilsPlugin.requestScreenAccess();
                   },
                   child: Text("REQUEST SCREEN ACCESS")),
+              _isScreenAccessProvided == true
+                  ? TextButton(
+                      onPressed: () async {
+                        _flutterandroidutilsPlugin.stopScreenAccess();
+                      },
+                      child: Text("STOP SCREEN ACCESS"))
+                  : Container(),
+              const Text("Checking shared preferences:"),
+              Wrap(
+                children: [
+                  Text(
+                      "int: $storedInt, string: $storedString, bool: $storedBool")
+                ],
+              ),
+              TextButton(
+                  onPressed: () {
+                    updateValues();
+                  },
+                  child: Text("Update values".toUpperCase()))
             ],
           ),
         ),

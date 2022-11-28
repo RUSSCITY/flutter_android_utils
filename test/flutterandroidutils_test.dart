@@ -20,7 +20,7 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    Flutterandroidutils flutterandroidutilsPlugin = Flutterandroidutils();
+    FlutterAndroidUtils flutterandroidutilsPlugin = FlutterAndroidUtils();
     MockFlutterandroidutilsPlatform fakePlatform = MockFlutterandroidutilsPlatform();
     FlutterandroidutilsPlatform.instance = fakePlatform;
   

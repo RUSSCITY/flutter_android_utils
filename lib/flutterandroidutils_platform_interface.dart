@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'flutterandroidutils_method_channel.dart';
@@ -49,12 +51,46 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
   }
 
   Future<bool> startService(String className) {
-    throw UnimplementedError(
-        'startService() has not been implemented.');
+    throw UnimplementedError('startService() has not been implemented.');
   }
 
   Future<bool> isServiceRunning(String className) {
     throw UnimplementedError(
         'isAccessibilityServiceProvided() has not been implemented.');
+  }
+
+  Future<bool> getSharedPreferencesBool(String name, bool defaultValue) {
+    throw UnimplementedError(
+        'getSharedPreferencesBool() has not been implemented.');
+  }
+
+  Future<int> getSharedPreferencesInt(String name, int defaultValue) async {
+    throw UnimplementedError(
+        'getSharedPreferencesInt() has not been implemented.');
+  }
+
+  Future<String> getSharedPreferencesString(
+      String name, String defaultValue) async {
+    throw UnimplementedError(
+        'getSharedPreferencesString() has not been implemented.');
+  }
+
+  Future<bool> putSharedPreferencesBool(String name, bool value) async {
+    throw UnimplementedError(
+        'putSharedPreferencesBool() has not been implemented.');
+  }
+
+  Future<bool> putSharedPreferencesInt(String name, int value) async {
+    throw UnimplementedError(
+        'putSharedPreferencesInt() has not been implemented.');
+  }
+
+  Future<bool> putSharedPreferencesString(String name, String value) async {
+    throw UnimplementedError(
+        'putSharedPreferencesString() has not been implemented.');
+  }
+
+  Future<bool> stopScreenAccess() async {
+    throw UnimplementedError('stopScreenAccess() has not been implemented.');
   }
 }
