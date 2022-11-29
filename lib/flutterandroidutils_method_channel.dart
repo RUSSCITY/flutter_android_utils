@@ -94,7 +94,7 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   @override
   Future<bool> stopScreenAccess() async {
     final isProvided =
-    await methodChannel.invokeMethod<bool>('stopScreenAccess');
+        await methodChannel.invokeMethod<bool>('stopScreenAccess');
     return isProvided ?? false;
   }
 
@@ -103,6 +103,13 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
     final isProvided = await methodChannel
         .invokeMethod<bool>('startService', {'serviceClassName': className});
     return isProvided ?? false;
+  }
+
+  @override
+  Future<bool> stopService(String className) async {
+    final isStopped = await methodChannel
+        .invokeMethod<bool>('stopService', {'serviceClassName': className});
+    return isStopped ?? false;
   }
 
   @override

@@ -37,6 +37,9 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
         } else if (call.method == "startService") {
             val className = call.argument<String>("serviceClassName")
             result.success(Utils.startService(mContext, className))
+        } else if (call.method == "stopService") {
+            val className = call.argument<String>("serviceClassName")
+            result.success(Utils.stopService(mContext, className))
         } else if (call.method == "isScreenAccessProvided") {
             result.success(Utils.isScreenAccessProvided(mContext))
         } else if (call.method == "requestScreenAccess") {

@@ -51,6 +51,10 @@ class FlutterAndroidUtils {
     return FlutterandroidutilsPlatform.instance.startService(className);
   }
 
+  Future<bool> stopService(String className) {
+    return FlutterandroidutilsPlatform.instance.stopService(className);
+  }
+
   Future<bool> isScreenAccessProvided() {
     return FlutterandroidutilsPlatform.instance.isScreenAccessProvided();
   }

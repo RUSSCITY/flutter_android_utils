@@ -82,6 +82,18 @@ public class Utils {
 		return false;
 	}
 
+	public static boolean stopService(Context context, String accessibilityServiceName) {
+		try {
+			Class<?> accessibilityService = Class.forName(accessibilityServiceName);
+			Intent intent = new Intent(context, accessibilityService);
+			context.stopService(intent);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
 	public static boolean isScreenAccessProvided(Context context) {
 		try {
 			Context mainApplicationContext = context.getApplicationContext();

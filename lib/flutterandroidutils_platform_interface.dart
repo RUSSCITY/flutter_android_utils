@@ -93,4 +93,8 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
   Future<bool> stopScreenAccess() async {
     throw UnimplementedError('stopScreenAccess() has not been implemented.');
   }
+
+  Future<bool> stopService(String className) async {
+    throw UnimplementedError('stopScreenAccess() has not been implemented.');
+  }
 }
