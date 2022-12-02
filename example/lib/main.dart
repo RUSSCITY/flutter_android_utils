@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   int storedInt = 0;
   String storedString = "";
   bool storedBool = false;
+  int storedLong = 0;
 
   final _flutterandroidutilsPlugin = FlutterAndroidUtils();
 
@@ -103,11 +104,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         .getSharedPreferencesString("STORED_SHARED_STRING", "NONE");
     int newStoredSharedInt = await FlutterAndroidUtils()
         .getSharedPreferencesInt("STORED_SHARED_INT", -1);
-
+    int newStoredSharedLong = await FlutterAndroidUtils()
+        .getSharedPreferencesLong("STORED_SHARED_LONG", -1);
     setState(() {
       storedInt = newStoredSharedInt;
       storedString = newStoredSharedString;
       storedBool = newStoredSharedBool;
+      storedLong = newStoredSharedLong;
     });
   }
 
@@ -118,6 +121,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         .getSharedPreferencesString("STORED_SHARED_STRING", "NONE");
     int newStoredSharedInt = await FlutterAndroidUtils()
         .getSharedPreferencesInt("STORED_SHARED_INT", -1);
+    int newStoredSharedLong = await FlutterAndroidUtils()
+        .getSharedPreferencesLong("STORED_SHARED_LONG", -1);
 
     await FlutterAndroidUtils()
         .putSharedPreferencesBool("STORED_SHARED_BOOL", !newStoredSharedBool);
@@ -125,6 +130,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         "STORED_SHARED_STRING", "${newStoredSharedString}a");
     await FlutterAndroidUtils()
         .putSharedPreferencesInt("STORED_SHARED_INT", newStoredSharedInt + 1);
+    await FlutterAndroidUtils().putSharedPreferencesLong(
+        "STORED_SHARED_LONG", newStoredSharedLong + 1);
 
     initStoredSharedPreferences();
   }
@@ -173,7 +180,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               Wrap(
                 children: [
                   Text(
-                      "int: $storedInt, string: $storedString, bool: $storedBool")
+                      "int: $storedInt, string: $storedString, bool: $storedBool, long: $storedLong")
                 ],
               ),
               TextButton(
