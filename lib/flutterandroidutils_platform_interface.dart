@@ -69,6 +69,11 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
         'getSharedPreferencesInt() has not been implemented.');
   }
 
+  Future<int> getSharedPreferencesLong(String name, int defaultValue) async {
+    throw UnimplementedError(
+        'getSharedPreferencesInt() has not been implemented.');
+  }
+
   Future<String> getSharedPreferencesString(
       String name, String defaultValue) async {
     throw UnimplementedError(
@@ -81,6 +86,11 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
   }
 
   Future<bool> putSharedPreferencesInt(String name, int value) async {
+    throw UnimplementedError(
+        'putSharedPreferencesInt() has not been implemented.');
+  }
+
+  Future<bool> putSharedPreferencesLong(String name, int value) async {
     throw UnimplementedError(
         'putSharedPreferencesInt() has not been implemented.');
   }

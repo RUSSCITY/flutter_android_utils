@@ -56,6 +56,10 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             val name = call.argument<String>("name")
             val defaultValue = call.argument<Int>("defaultValue")
             result.success(Utils.getSharedPreferencesInt(mContext, name, defaultValue))
+        } else if (call.method == "getSharedPreferencesLong") {
+            val name = call.argument<String>("name")
+            val defaultValue = call.argument<Long>("defaultValue")
+            result.success(Utils.getSharedPreferencesLong(mContext, name, defaultValue))
         } else if (call.method == "getSharedPreferencesString") {
             val name = call.argument<String>("name")
             val defaultValue = call.argument<String>("defaultValue")
@@ -68,6 +72,10 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             val name = call.argument<String>("name")
             val value = call.argument<Int>("value")
             result.success(Utils.putSharedPreferencesInt(mContext, name, value))
+        } else if (call.method == "putSharedPreferencesLong") {
+            val name = call.argument<String>("name")
+            val value = call.argument<Long>("value")
+            result.success(Utils.putSharedPreferencesLong(mContext, name, value))
         } else if (call.method == "putSharedPreferencesString") {
             val name = call.argument<String>("name")
             val value = call.argument<String>("value")

@@ -26,6 +26,11 @@ class FlutterAndroidUtils {
         .getSharedPreferencesInt(name, defaultValue);
   }
 
+  Future<int> getSharedPreferencesLong(String name, int defaultValue) async {
+    return FlutterandroidutilsPlatform.instance
+        .getSharedPreferencesLong(name, defaultValue);
+  }
+
   Future<bool> putSharedPreferencesBool(String name, bool value) async {
     return FlutterandroidutilsPlatform.instance
         .putSharedPreferencesBool(name, value);
@@ -34,6 +39,11 @@ class FlutterAndroidUtils {
   Future<bool> putSharedPreferencesInt(String name, int value) async {
     return FlutterandroidutilsPlatform.instance
         .putSharedPreferencesInt(name, value);
+  }
+
+  Future<bool> putSharedPreferencesLong(String name, int value) async {
+    return FlutterandroidutilsPlatform.instance
+        .putSharedPreferencesLong(name, value);
   }
 
   Future<bool> putSharedPreferencesString(String name, String value) async {

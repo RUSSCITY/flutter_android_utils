@@ -157,6 +157,17 @@ public class Utils {
 		return defaultValue;
 	}
 
+	public static Long getSharedPreferencesLong(Context context, String name, Long defaultValue) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
+			return sharedPreferences.getLong(name, defaultValue);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return defaultValue;
+	}
+
 	public static String getSharedPreferencesString(Context context, String name, String defaultValue) {
 		try {
 			Context mainApplicationContext = context.getApplicationContext();
@@ -188,6 +199,20 @@ public class Utils {
 			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
 			SharedPreferences.Editor edit = sharedPreferences.edit();
 			edit.putInt(name, value);
+			edit.commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean putSharedPreferencesLong(Context context, String name, Long value) {
+		try {
+			Context mainApplicationContext = context.getApplicationContext();
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mainApplicationContext);
+			SharedPreferences.Editor edit = sharedPreferences.edit();
+			edit.putLong(name, value);
 			edit.commit();
 			return true;
 		} catch (Exception e) {

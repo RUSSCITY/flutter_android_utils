@@ -41,6 +41,14 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
+  Future<int> getSharedPreferencesLong(String name, int defaultValue) async {
+    final isProvided = await methodChannel.invokeMethod<int>(
+        'getSharedPreferencesLong',
+        {'name': name, 'defaultValue': defaultValue});
+    return isProvided ?? defaultValue;
+  }
+
+  @override
   Future<String> getSharedPreferencesString(
       String name, String defaultValue) async {
     final isProvided = await methodChannel.invokeMethod<String>(
@@ -60,6 +68,13 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   Future<bool> putSharedPreferencesInt(String name, int value) async {
     return await methodChannel.invokeMethod<bool>(
             'putSharedPreferencesInt', {'name': name, 'value': value}) ??
+        false;
+  }
+
+  @override
+  Future<bool> putSharedPreferencesLong(String name, int value) async {
+    return await methodChannel.invokeMethod<bool>(
+        'putSharedPreferencesLong', {'name': name, 'value': value}) ??
         false;
   }
 
