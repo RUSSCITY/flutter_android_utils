@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -25,6 +27,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String storedString = "";
   bool storedBool = false;
   int storedLong = 0;
+
+  // camera
+  List<dynamic>? availableCameras;
 
   final _flutterandroidutilsPlugin = FlutterAndroidUtils();
 
@@ -136,6 +141,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     initStoredSharedPreferences();
   }
 
+  Future<void> getAvailableCameras() async {
+    setState(() {
+      availableCameras = null;
+    });
+    final newAvailableCameras =
+        await FlutterAndroidUtils().getAvailableCameras();
+    setState(() {
+      availableCameras = newAvailableCameras;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -187,7 +203,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   onPressed: () {
                     updateValues();
                   },
-                  child: Text("Update values".toUpperCase()))
+                  child: Text("Update values".toUpperCase())),
+              availableCameras != null
+                  ? Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.black26)),
+                      child: Text(jsonEncode(availableCameras!)),
+                    )
+                  : Container(),
+              TextButton(
+                  onPressed: () {
+                    getAvailableCameras();
+                  },
+                  child: Text("Get available cameras".toUpperCase()))
             ],
           ),
         ),

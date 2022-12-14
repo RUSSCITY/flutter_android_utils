@@ -16,6 +16,10 @@ import java.lang.reflect.Method;
 import android.content.Intent;
 import android.os.Build;
 
+import org.jetbrains.annotations.NotNull;
+
+import software.ragimov.flutterandroidutils.camera.MCameraManager;
+
 public class Utils {
 
 	public static boolean isAccessibilityServiceEnabled(Context context, String accessibilityServiceName) {
@@ -246,5 +250,15 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return true;
+	}
+
+	@NotNull
+	public static String getAvailableCameras(@NotNull Context mContext) {
+		try {
+			return MCameraManager.getAvailableCameras(mContext);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "[]";
 	}
 }

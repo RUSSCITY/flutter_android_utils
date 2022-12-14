@@ -80,4 +80,9 @@ class FlutterAndroidUtils {
   Future<bool> test() {
     return FlutterandroidutilsPlatform.instance.test();
   }
+
+  Future<List<dynamic>> getAvailableCameras() async {
+    return FlutterandroidutilsPlatform.instance
+        .getAvailableCameras();
+  }
 }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
@@ -74,7 +75,7 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   @override
   Future<bool> putSharedPreferencesLong(String name, int value) async {
     return await methodChannel.invokeMethod<bool>(
-        'putSharedPreferencesLong', {'name': name, 'value': value}) ??
+            'putSharedPreferencesLong', {'name': name, 'value': value}) ??
         false;
   }
 
@@ -131,5 +132,16 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   Future<bool> test() async {
     final isProvided = await methodChannel.invokeMethod<bool>('test');
     return isProvided ?? false;
+  }
+
+  @override
+  Future<List<dynamic>> getAvailableCameras() async {
+    final availableCameras =
+        await methodChannel.invokeMethod<String>('getAvailableCameras');
+    if (availableCameras != null) {
+      final result = json.decode(availableCameras);
+      return result;
+    }
+    return [];
   }
 }

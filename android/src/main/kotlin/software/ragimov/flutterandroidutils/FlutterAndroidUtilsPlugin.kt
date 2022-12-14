@@ -80,6 +80,8 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             val name = call.argument<String>("name")
             val value = call.argument<String>("value")
             result.success(Utils.putSharedPreferencesString(mContext, name, value))
+        } else if (call.method == "getAvailableCameras") {
+            result.success(Utils.getAvailableCameras(mContext))
         } else {
             result.notImplemented()
         }
