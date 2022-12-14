@@ -22,12 +22,13 @@ public class MCameraManager {
 			for (String cameraId : cameraIdList) {
 				CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
 				Integer orientation = characteristics.get(CameraCharacteristics.LENS_FACING);
+				boolean flashAvailable = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
 				if (orientation == CameraMetadata.LENS_FACING_FRONT) {
-					result.put(new JSONObject().put("id", cameraId).put("orientation", "front"));
+					result.put(new JSONObject().put("id", cameraId).put("orientation", "front").put("flashAvailable", flashAvailable));
 				} else if (orientation == CameraMetadata.LENS_FACING_BACK) {
-					result.put(new JSONObject().put("id", cameraId).put("orientation", "back"));
+					result.put(new JSONObject().put("id", cameraId).put("orientation", "back").put("flashAvailable", flashAvailable));
 				} else {
-					result.put(new JSONObject().put("id", cameraId).put("orientation", "external"));
+					result.put(new JSONObject().put("id", cameraId).put("orientation", "external").put("flashAvailable", flashAvailable));
 				}
 			}
 			return result.toString();
