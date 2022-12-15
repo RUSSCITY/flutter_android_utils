@@ -31,6 +31,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // camera
   List<dynamic>? availableCameras;
 
+  // channels
+  String? callbackFromAndroid;
+
   final _flutterandroidutilsPlugin = FlutterAndroidUtils();
 
   @override
@@ -152,6 +155,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
+  Future<void> sendBroadCastToAndroid() async {
+    FlutterAndroidUtils().setCallBackListener((data) {
+      setState(() {
+        callbackFromAndroid = data;
+      });
+    });
+    FlutterAndroidUtils().sendBroadCast(jsonEncode({"action": "showTime"}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -216,7 +228,26 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   onPressed: () {
                     getAvailableCameras();
                   },
-                  child: Text("Get available cameras".toUpperCase()))
+                  child: Text("Get available cameras".toUpperCase())),
+              const SizedBox(
+                height: 12,
+              ),
+              callbackFromAndroid != null
+                  ? Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.black26)),
+                      child: Text(callbackFromAndroid!),
+                    )
+                  : Container(),
+              const SizedBox(
+                height: 12,
+              ),
+              TextButton(
+                  onPressed: () {
+                    sendBroadCastToAndroid();
+                  },
+                  child: Text("Send broadcast to Android".toUpperCase()))
             ],
           ),
         ),

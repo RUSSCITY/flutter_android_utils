@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'flutterandroidutils_platform_interface.dart';
@@ -10,6 +8,28 @@ import 'flutterandroidutils_platform_interface.dart';
 class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   /// The method channel used to interact with the native platform.
   final methodChannel = const MethodChannel('flutterandroidutils');
+
+  @override
+  Future<bool> sendBroadCast(String message) async {
+    final isProvided = await methodChannel
+        .invokeMethod<bool>('sendBroadCast', {'message': message});
+    return isProvided ?? false;
+  }
+
+  @override
+  Future<void> setCallBackListener(Function? callback) async {
+    methodChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case "messageToClient":
+          if (callback != null) {
+            callback!(call.arguments);
+          }
+          break;
+        default:
+          print('no method handler for method ${call.method}');
+      }
+    });
+  }
 
   @override
   Future<String?> getPlatformVersion() async {

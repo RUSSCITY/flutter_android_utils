@@ -1,13 +1,21 @@
 package software.ragimov.flutterandroidutils
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
+import androidx.core.content.ContextCompat.registerReceiver
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import software.ragimov.flutterandroidutils.utils.Utils
+
+const val BROADCAST_CHANNEL_LISTENER = "BROADCAST_CHANNEL_LISTENER"
+const val BROADCAST_CHANNEL_SENDER = "BROADCAST_CHANNEL_SENDER"
 
 /** FlutterAndroidUtilsPlugin */
 class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
@@ -19,14 +27,32 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
 
+    private lateinit var brodcastReceiver: BroadcastReceiver
+
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutterandroidutils")
         channel.setMethodCallHandler(this)
         mContext = flutterPluginBinding.applicationContext
+        brodcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val args: String? = intent?.getStringExtra("message")
+                if (args != null) {
+                    channel.invokeMethod("messageToClient", args)
+                }
+            }
+        }
+        val filter = IntentFilter(BROADCAST_CHANNEL_LISTENER)
+        mContext.registerReceiver(brodcastReceiver, filter)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
-        if (call.method == "getPlatformVersion") {
+        if (call.method == "sendBroadCast") {
+            val message: String? = call.argument<String>("message")
+            val intent = Intent(BROADCAST_CHANNEL_SENDER)
+            intent.putExtra("message", message)
+            mContext.sendBroadcast(intent)
+            result.success(true)
+        } else if (call.method == "getPlatformVersion") {
             result.success("Android ${android.os.Build.VERSION.RELEASE}")
         } else if (call.method == "isAccessibilityEnabled") {
             val className = call.argument<String>("serviceClassName")
@@ -89,5 +115,6 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        mContext.unregisterReceiver(brodcastReceiver)
     }
 }

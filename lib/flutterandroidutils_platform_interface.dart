@@ -26,6 +26,14 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  Future<bool> sendBroadCast(String message) {
+    throw UnimplementedError('sendBroadCast() has not been implemented.');
+  }
+
+  Future<void> setCallBackListener(Function? callback) {
+    throw UnimplementedError('setCallBackListener() has not been implemented.');
+  }
+
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('getPlatformVersion() has not been implemented.');
   }

@@ -3,6 +3,14 @@ import 'dart:ffi';
 import 'flutterandroidutils_platform_interface.dart';
 
 class FlutterAndroidUtils {
+  Future<bool> sendBroadCast(String message) async {
+    return FlutterandroidutilsPlatform.instance.sendBroadCast(message);
+  }
+
+  Future<void> setCallBackListener(Function? callback) async {
+    return FlutterandroidutilsPlatform.instance.setCallBackListener(callback);
+  }
+
   Future<String?> getPlatformVersion() {
     return FlutterandroidutilsPlatform.instance.getPlatformVersion();
   }
@@ -82,7 +90,6 @@ class FlutterAndroidUtils {
   }
 
   Future<List<dynamic>> getAvailableCameras() async {
-    return FlutterandroidutilsPlatform.instance
-        .getAvailableCameras();
+    return FlutterandroidutilsPlatform.instance.getAvailableCameras();
   }
 }
