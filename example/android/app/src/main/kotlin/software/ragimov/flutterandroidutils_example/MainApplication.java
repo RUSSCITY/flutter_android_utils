@@ -22,12 +22,12 @@ public class MainApplication extends FlutterApplication {
 		broadcastReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				Intent intent1 = new Intent("BROADCAST_CHANNEL_LISTENER");
+				Intent intent1 = new Intent("software.ragimov.BROADCAST_CHANNEL_TO_FLUTTER");
 				intent1.putExtra("message", new Date().toString());
 				sendBroadcast(intent1);
 			}
 		};
-		registerReceiver(broadcastReceiver, new IntentFilter("BROADCAST_CHANNEL_SENDER"));
+		registerReceiver(broadcastReceiver, new IntentFilter("software.ragimov.BROADCAST_CHANNEL_FROM_FLUTTER"));
 	}
 
 	public void setMediaIntent(Intent intent) {

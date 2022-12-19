@@ -14,8 +14,8 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import software.ragimov.flutterandroidutils.utils.Utils
 
-const val BROADCAST_CHANNEL_LISTENER = "BROADCAST_CHANNEL_LISTENER"
-const val BROADCAST_CHANNEL_SENDER = "BROADCAST_CHANNEL_SENDER"
+const val BROADCAST_CHANNEL_TO_FLUTTER = "software.ragimov.BROADCAST_CHANNEL_TO_FLUTTER"
+const val BROADCAST_CHANNEL_FROM_FLUTTER = "software.ragimov.BROADCAST_CHANNEL_FROM_FLUTTER"
 
 /** FlutterAndroidUtilsPlugin */
 class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
@@ -41,14 +41,14 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
                 }
             }
         }
-        val filter = IntentFilter(BROADCAST_CHANNEL_LISTENER)
+        val filter = IntentFilter(BROADCAST_CHANNEL_TO_FLUTTER)
         mContext.registerReceiver(brodcastReceiver, filter)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
         if (call.method == "sendBroadCast") {
             val message: String? = call.argument<String>("message")
-            val intent = Intent(BROADCAST_CHANNEL_SENDER)
+            val intent = Intent(BROADCAST_CHANNEL_FROM_FLUTTER)
             intent.putExtra("message", message)
             mContext.sendBroadcast(intent)
             result.success(true)
