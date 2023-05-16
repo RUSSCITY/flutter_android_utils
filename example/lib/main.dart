@@ -180,6 +180,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               TextButton(
                   onPressed: () async {
                     _flutterandroidutilsPlugin
+                        .openAccessibilityServiceSettings("city.russ.services.MyAccessibilityService");
+                  },
+                  child: Text("OPEN ACCESSIBILIY SERVICE SETTINGS")),
+              TextButton(
+                  onPressed: () async {
+                    _flutterandroidutilsPlugin
                         .startService("city.russ.services.MainService");
                   },
                   child: Text("START MAIN SERVICE")),

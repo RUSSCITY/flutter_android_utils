@@ -43,6 +43,11 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
         'isAccessibilityServiceProvided() has not been implemented.');
   }
 
+  Future<void> openAccessibilityServiceSettings(String className){
+    throw UnimplementedError(
+        'isAccessibilityServiceProvided() has not been implemented.');
+  }
+
   Future<bool> isScreenAccessProvided() {
     throw UnimplementedError(
         'isScreenAccessProvided() has not been implemented.');

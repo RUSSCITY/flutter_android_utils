@@ -46,6 +46,13 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
+  Future<bool> openAccessibilityServiceSettings(String className) async {
+    final isProvided = await methodChannel.invokeMethod<bool>(
+        'openAccessibilityServiceSettings', {'serviceClassName': className});
+    return isProvided ?? false;
+  }
+
+  @override
   Future<bool> getSharedPreferencesBool(String name, bool defaultValue) async {
     final isProvided = await methodChannel.invokeMethod<bool>(
         'getSharedPreferencesBool',

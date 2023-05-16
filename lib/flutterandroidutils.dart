@@ -20,6 +20,11 @@ class FlutterAndroidUtils {
         .isAccessibilityServiceProvided(className);
   }
 
+  Future<void> openAccessibilityServiceSettings(String className) {
+    return FlutterandroidutilsPlatform.instance
+        .openAccessibilityServiceSettings(className);
+  }
+
   Future<bool> isServiceRunning(String className) {
     return FlutterandroidutilsPlatform.instance.isServiceRunning(className);
   }

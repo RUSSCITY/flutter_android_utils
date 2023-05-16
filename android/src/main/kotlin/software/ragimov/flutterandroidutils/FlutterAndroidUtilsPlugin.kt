@@ -57,6 +57,9 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
         } else if (call.method == "isAccessibilityEnabled") {
             val className = call.argument<String>("serviceClassName")
             result.success(Utils.isAccessibilityServiceEnabled(mContext, className))
+        } else if (call.method == "openAccessibilityServiceSettings") {
+            val className = call.argument<String>("serviceClassName")
+            result.success(Utils.openAccessibilityServiceSettings(mContext, className))
         } else if (call.method == "isServiceRunning") {
             val className = call.argument<String>("serviceClassName")
             result.success(Utils.isServiceRunning(mContext, className))
