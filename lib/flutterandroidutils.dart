@@ -82,6 +82,10 @@ class FlutterAndroidUtils {
     return FlutterandroidutilsPlatform.instance.isScreenAccessProvided();
   }
 
+  Future<bool> isNotificationListenerActive() {
+    return FlutterandroidutilsPlatform.instance.isNotificationListenerActive();
+  }
+
   Future<bool> requestScreenAccess() {
     return FlutterandroidutilsPlatform.instance.requestScreenAccess();
   }

@@ -128,6 +128,13 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
+  Future<bool> isNotificationListenerActive() async {
+    final isActive =
+        await methodChannel.invokeMethod<bool>('isNotificationListenerActive');
+    return isActive ?? false;
+  }
+
+  @override
   Future<bool> requestScreenAccess() async {
     final isProvided =
         await methodChannel.invokeMethod<bool>('requestScreenAccess');

@@ -21,6 +21,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String _platformVersion = 'Unknown';
   bool? _accessibilityProvided;
   bool? _isScreenAccessProvided;
+  bool? _notificationListenerEnabled;
 
   // shared preferences
   int storedInt = 0;
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     String platformVersion;
     bool accesibilityProvided;
     bool isScreenAccessProvided;
+    bool isNotificationListenerEnabled;
 
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
@@ -93,6 +95,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       isScreenAccessProvided = false;
     }
 
+    try {
+      isNotificationListenerEnabled =
+          await _flutterandroidutilsPlugin.isNotificationListenerActive();
+    } catch (e) {
+      isNotificationListenerEnabled = false;
+    }
+
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
@@ -102,6 +111,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       _platformVersion = platformVersion;
       _accessibilityProvided = accesibilityProvided;
       _isScreenAccessProvided = isScreenAccessProvided;
+      _notificationListenerEnabled = isNotificationListenerEnabled;
     });
   }
 
@@ -177,10 +187,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Running on: $_platformVersion\n'),
+              Text(
+                  'Notification Listener Service Enabled: $_notificationListenerEnabled\n'),
               TextButton(
                   onPressed: () async {
-                    _flutterandroidutilsPlugin
-                        .openAccessibilityServiceSettings("city.russ.services.MyAccessibilityService");
+                    _flutterandroidutilsPlugin.openAccessibilityServiceSettings(
+                        "city.russ.services.MyAccessibilityService");
                   },
                   child: Text("OPEN ACCESSIBILIY SERVICE SETTINGS")),
               TextButton(

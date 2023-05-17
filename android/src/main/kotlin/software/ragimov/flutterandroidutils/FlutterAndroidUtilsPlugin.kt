@@ -71,6 +71,8 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.stopService(mContext, className))
         } else if (call.method == "isScreenAccessProvided") {
             result.success(Utils.isScreenAccessProvided(mContext))
+        } else if (call.method == "isNotificationListenerActive") {
+            result.success(Utils.isNotificationListenerActive(mContext))
         } else if (call.method == "requestScreenAccess") {
             result.success(Utils.requestScreenAccess(mContext))
         } else if (call.method == "stopScreenAccess") {

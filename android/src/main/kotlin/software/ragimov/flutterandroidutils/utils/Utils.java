@@ -12,11 +12,14 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.content.pm.PackageManager;
 
+import androidx.core.app.NotificationManagerCompat;
+
 import java.lang.reflect.Method;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -145,6 +148,17 @@ public class Utils {
             Method m = mainApplicationContext.getClass().getMethod("getMediaIntent");
             Object rv = m.invoke(mainApplicationContext);
             return rv != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean isNotificationListenerActive(Context context) {
+        try {
+            Set<String> allowedApps = NotificationManagerCompat.getEnabledListenerPackages(context);
+            boolean notificationListener = allowedApps.contains(context.getPackageName());
+            return notificationListener;
         } catch (Exception e) {
             e.printStackTrace();
         }
