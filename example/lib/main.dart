@@ -34,6 +34,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // channels
   String? callbackFromAndroid;
+  String? _androidId;
 
   final _flutterandroidutilsPlugin = FlutterAndroidUtils();
 
@@ -65,6 +66,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
+    String? androidId;
     bool accesibilityProvided;
     bool isScreenAccessProvided;
     bool isNotificationListenerEnabled;
@@ -102,6 +104,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       isNotificationListenerEnabled = false;
     }
 
+    try {
+      androidId = await _flutterandroidutilsPlugin.getAndroidId();
+    } catch (e) {
+    }
+
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
@@ -112,6 +119,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       _accessibilityProvided = accesibilityProvided;
       _isScreenAccessProvided = isScreenAccessProvided;
       _notificationListenerEnabled = isNotificationListenerEnabled;
+      _androidId = androidId;
     });
   }
 
@@ -187,6 +195,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Running on: $_platformVersion\n'),
+              Text('Android ID: $_androidId\n'),
               Text(
                   'Notification Listener Service Enabled: $_notificationListenerEnabled\n'),
               TextButton(

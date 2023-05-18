@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
 import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
@@ -316,4 +317,16 @@ public class Utils {
         }
         return "[]";
     }
+
+    @NotNull
+    public static String getAndroidId(@NotNull Context mContext) {
+        try {
+            return android.provider.Settings.Secure.getString(mContext.getContentResolver(),
+                    android.provider.Settings.Secure.ANDROID_ID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

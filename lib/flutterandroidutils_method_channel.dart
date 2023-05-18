@@ -178,4 +178,10 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
     }
     return [];
   }
+
+  @override
+  Future<String?> getAndroidId() async {
+    final androidId = await methodChannel.invokeMethod<String>('getAndroidId');
+    return androidId;
+  }
 }

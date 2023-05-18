@@ -129,4 +129,8 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
   Future<List<dynamic>> getAvailableCameras() async {
     throw UnimplementedError('getAvailableCameras() has not been implemented.');
   }
+
+  Future<String?> getAndroidId() async {
+    throw UnimplementedError('getAndroidId() has not been implemented.');
+  }
 }

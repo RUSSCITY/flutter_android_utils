@@ -113,6 +113,8 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.putSharedPreferencesString(mContext, name, value))
         } else if (call.method == "getAvailableCameras") {
             result.success(Utils.getAvailableCameras(mContext))
+        } else if (call.method == "getAndroidId") {
+            result.success(Utils.getAndroidId(mContext))
         } else {
             result.notImplemented()
         }

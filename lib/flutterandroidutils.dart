@@ -101,4 +101,10 @@ class FlutterAndroidUtils {
   Future<List<dynamic>> getAvailableCameras() async {
     return FlutterandroidutilsPlatform.instance.getAvailableCameras();
   }
+
+  Future<String?> getAndroidId() {
+    return FlutterandroidutilsPlatform.instance
+        .getAndroidId();
+  }
+
 }
