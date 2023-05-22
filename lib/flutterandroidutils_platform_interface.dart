@@ -133,4 +133,10 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
   Future<String?> getAndroidId() async {
     throw UnimplementedError('getAndroidId() has not been implemented.');
   }
+
+  @override
+  Future<String?> getDeviceOpenId() async {
+    throw UnimplementedError('getDeviceOpenId() has not been implemented.');
+
+  }
 }

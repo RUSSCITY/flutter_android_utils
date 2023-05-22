@@ -107,4 +107,9 @@ class FlutterAndroidUtils {
         .getAndroidId();
   }
 
+  Future<String?> getDeviceOpenId() {
+    return FlutterandroidutilsPlatform.instance
+        .getDeviceOpenId();
+  }
+
 }

@@ -5,13 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import androidx.annotation.NonNull
-import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 import androidx.core.content.ContextCompat.registerReceiver
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import software.ragimov.flutterandroidutils.receivers.DeviceOpenIdReceiver
 import software.ragimov.flutterandroidutils.utils.Utils
 
 const val BROADCAST_CHANNEL_TO_FLUTTER = "software.ragimov.BROADCAST_CHANNEL_TO_FLUTTER"
@@ -28,6 +27,8 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
 
     private lateinit var brodcastReceiver: BroadcastReceiver
+    private lateinit var deviceOpenIdReceiver: DeviceOpenIdReceiver
+
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutterandroidutils")
@@ -41,8 +42,14 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
                 }
             }
         }
+        deviceOpenIdReceiver = DeviceOpenIdReceiver()
+        mContext.registerReceiver(
+            deviceOpenIdReceiver, IntentFilter(DeviceOpenIdReceiver.ACTION_DEVICE_OPEN_ID)
+        )
+        DeviceOpenIdReceiver.init(mContext)
         val filter = IntentFilter(BROADCAST_CHANNEL_TO_FLUTTER)
         mContext.registerReceiver(brodcastReceiver, filter)
+
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
@@ -115,6 +122,8 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.getAvailableCameras(mContext))
         } else if (call.method == "getAndroidId") {
             result.success(Utils.getAndroidId(mContext))
+        } else if (call.method == "getDeviceOpenId") {
+            result.success(Utils.getDeviceOpenId(mContext))
         } else {
             result.notImplemented()
         }
@@ -123,5 +132,6 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
         mContext.unregisterReceiver(brodcastReceiver)
+        mContext.unregisterReceiver(deviceOpenIdReceiver)
     }
 }

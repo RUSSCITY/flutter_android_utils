@@ -25,6 +25,7 @@ import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 
 import software.ragimov.flutterandroidutils.camera.MCameraManager;
+import software.ragimov.flutterandroidutils.receivers.DeviceOpenIdReceiver;
 
 public class Utils {
 
@@ -329,4 +330,17 @@ public class Utils {
         return null;
     }
 
+    @NotNull
+    public static String getDeviceOpenId(@NotNull Context mContext) {
+        try {
+            String deviceOpenId = DeviceOpenIdReceiver.getDeviceOpenId(mContext);
+            if (deviceOpenId.equals("-")) {
+                deviceOpenId = DeviceOpenIdReceiver.generateOpenId(mContext);
+            }
+            return deviceOpenId;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

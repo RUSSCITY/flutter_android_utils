@@ -34,7 +34,7 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   @override
   Future<String?> getPlatformVersion() async {
     final version =
-        await methodChannel.invokeMethod<String>('getPlatformVersion');
+    await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
 
@@ -77,8 +77,8 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
-  Future<String> getSharedPreferencesString(
-      String name, String defaultValue) async {
+  Future<String> getSharedPreferencesString(String name,
+      String defaultValue) async {
     final isProvided = await methodChannel.invokeMethod<String>(
         'getSharedPreferencesString',
         {'name': name, 'defaultValue': defaultValue});
@@ -88,28 +88,28 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   @override
   Future<bool> putSharedPreferencesBool(String name, bool value) async {
     return await methodChannel.invokeMethod<bool>(
-            'putSharedPreferencesBool', {'name': name, 'value': value}) ??
+        'putSharedPreferencesBool', {'name': name, 'value': value}) ??
         false;
   }
 
   @override
   Future<bool> putSharedPreferencesInt(String name, int value) async {
     return await methodChannel.invokeMethod<bool>(
-            'putSharedPreferencesInt', {'name': name, 'value': value}) ??
+        'putSharedPreferencesInt', {'name': name, 'value': value}) ??
         false;
   }
 
   @override
   Future<bool> putSharedPreferencesLong(String name, int value) async {
     return await methodChannel.invokeMethod<bool>(
-            'putSharedPreferencesLong', {'name': name, 'value': value}) ??
+        'putSharedPreferencesLong', {'name': name, 'value': value}) ??
         false;
   }
 
   @override
   Future<bool> putSharedPreferencesString(String name, String value) async {
     return await methodChannel.invokeMethod<bool>(
-            'putSharedPreferencesString', {'name': name, 'value': value}) ??
+        'putSharedPreferencesString', {'name': name, 'value': value}) ??
         false;
   }
 
@@ -123,28 +123,28 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   @override
   Future<bool> isScreenAccessProvided() async {
     final isProvided =
-        await methodChannel.invokeMethod<bool>('isScreenAccessProvided');
+    await methodChannel.invokeMethod<bool>('isScreenAccessProvided');
     return isProvided ?? false;
   }
 
   @override
   Future<bool> isNotificationListenerActive() async {
     final isActive =
-        await methodChannel.invokeMethod<bool>('isNotificationListenerActive');
+    await methodChannel.invokeMethod<bool>('isNotificationListenerActive');
     return isActive ?? false;
   }
 
   @override
   Future<bool> requestScreenAccess() async {
     final isProvided =
-        await methodChannel.invokeMethod<bool>('requestScreenAccess');
+    await methodChannel.invokeMethod<bool>('requestScreenAccess');
     return isProvided ?? false;
   }
 
   @override
   Future<bool> stopScreenAccess() async {
     final isProvided =
-        await methodChannel.invokeMethod<bool>('stopScreenAccess');
+    await methodChannel.invokeMethod<bool>('stopScreenAccess');
     return isProvided ?? false;
   }
 
@@ -171,7 +171,7 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   @override
   Future<List<dynamic>> getAvailableCameras() async {
     final availableCameras =
-        await methodChannel.invokeMethod<String>('getAvailableCameras');
+    await methodChannel.invokeMethod<String>('getAvailableCameras');
     if (availableCameras != null) {
       final result = json.decode(availableCameras);
       return result;
@@ -183,5 +183,12 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   Future<String?> getAndroidId() async {
     final androidId = await methodChannel.invokeMethod<String>('getAndroidId');
     return androidId;
+  }
+
+  @override
+  Future<String?> getDeviceOpenId() async {
+    final deviceOpenId =
+    await methodChannel.invokeMethod<String>('getDeviceOpenId');
+    return deviceOpenId;
   }
 }

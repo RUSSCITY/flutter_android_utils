@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool? _accessibilityProvided;
   bool? _isScreenAccessProvided;
   bool? _notificationListenerEnabled;
+  String? _deviceOpenId;
 
   // shared preferences
   int storedInt = 0;
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Future<void> initPlatformState() async {
     String platformVersion;
     String? androidId;
+    String? deviceOpenId;
     bool accesibilityProvided;
     bool isScreenAccessProvided;
     bool isNotificationListenerEnabled;
@@ -76,6 +78,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     try {
       platformVersion = await _flutterandroidutilsPlugin.getPlatformVersion() ??
           'Unknown platform version';
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+
+    try {
+      deviceOpenId = await _flutterandroidutilsPlugin.getDeviceOpenId() ??
+          'Unknown device open id';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -106,8 +115,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     try {
       androidId = await _flutterandroidutilsPlugin.getAndroidId();
-    } catch (e) {
-    }
+    } catch (e) {}
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -120,6 +128,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       _isScreenAccessProvided = isScreenAccessProvided;
       _notificationListenerEnabled = isNotificationListenerEnabled;
       _androidId = androidId;
+      _deviceOpenId = deviceOpenId;
     });
   }
 
@@ -196,6 +205,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             children: [
               Text('Running on: $_platformVersion\n'),
               Text('Android ID: $_androidId\n'),
+              Text('Device Open Id: $_deviceOpenId\n'),
               Text(
                   'Notification Listener Service Enabled: $_notificationListenerEnabled\n'),
               TextButton(

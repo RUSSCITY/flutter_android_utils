@@ -1,3 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="software.ragimov.flutterandroidutils">
+    package="software.ragimov.flutterandroidutils">
+
+    <application>
+        <receiver
+            android:name=".receivers.DeviceOpenIdReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="software.ragimov.openid" />
+            </intent-filter>
+        </receiver>
+    </application>
 </manifest>
