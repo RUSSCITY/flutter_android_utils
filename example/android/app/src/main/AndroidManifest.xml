@@ -2,6 +2,8 @@
     package="software.ragimov.flutterandroidutils_example">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION"/>
 
     <application
         android:name=".MainApplication"
@@ -49,6 +51,7 @@
             android:name="city.russ.services.MyNotificationListenerService"
             android:exported="true"
             android:label="flutterandroidutils_example"
+            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />

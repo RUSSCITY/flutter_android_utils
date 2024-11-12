@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.registerReceiver
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -43,13 +44,20 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             }
         }
         deviceOpenIdReceiver = DeviceOpenIdReceiver()
-        mContext.registerReceiver(
-            deviceOpenIdReceiver, IntentFilter(DeviceOpenIdReceiver.ACTION_DEVICE_OPEN_ID)
+        ContextCompat.registerReceiver(
+            mContext,
+            deviceOpenIdReceiver,
+            IntentFilter(DeviceOpenIdReceiver.ACTION_DEVICE_OPEN_ID),
+            ContextCompat.RECEIVER_EXPORTED
         )
         DeviceOpenIdReceiver.init(mContext)
         val filter = IntentFilter(BROADCAST_CHANNEL_TO_FLUTTER)
-        mContext.registerReceiver(brodcastReceiver, filter)
-
+        ContextCompat.registerReceiver(
+            mContext,
+            brodcastReceiver,
+            filter,
+            ContextCompat.RECEIVER_EXPORTED
+        )
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {

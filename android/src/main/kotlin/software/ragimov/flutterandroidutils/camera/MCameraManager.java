@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 public class MCameraManager {
 
-	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 	public static String getAvailableCameras(Context context) {
 		try {
 			CameraManager manager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
