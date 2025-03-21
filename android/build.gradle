@@ -25,6 +25,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace "software.ragimov.flutterandroidutils"
+
     compileSdkVersion 34
 
     compileOptions {
@@ -44,6 +46,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
     }
+
 }
 
 dependencies {
