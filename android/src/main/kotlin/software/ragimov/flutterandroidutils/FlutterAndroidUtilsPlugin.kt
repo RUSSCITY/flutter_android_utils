@@ -132,6 +132,8 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.getAndroidId(mContext))
         } else if (call.method == "getDeviceOpenId") {
             result.success(Utils.getDeviceOpenId(mContext))
+        } else if (call.method == "openApp") {
+            result.success(Utils.openApp(mContext))
         } else {
             result.notImplemented()
         }

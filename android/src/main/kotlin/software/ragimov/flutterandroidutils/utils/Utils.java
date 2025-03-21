@@ -2,6 +2,7 @@ package software.ragimov.flutterandroidutils.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -342,5 +343,28 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean openApp(@NotNull Context mContext) {
+        try {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(mContext)) {
+                NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (notificationManager.isNotificationPolicyAccessGranted()) {
+                        // Disable DND when possible
+                        notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
+                    }
+                }
+                Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(mContext.getPackageName());
+                if (intent != null) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
