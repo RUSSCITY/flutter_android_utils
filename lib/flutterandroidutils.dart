@@ -116,4 +116,9 @@ class FlutterAndroidUtils {
     return FlutterandroidutilsPlatform.instance
         .openApp();
   }
+
+  Future<bool?> openXiaomiAppAdditionalSettings() {
+    return FlutterandroidutilsPlatform.instance
+        .openXiaomiAppAdditionalSettings();
+  }
 }

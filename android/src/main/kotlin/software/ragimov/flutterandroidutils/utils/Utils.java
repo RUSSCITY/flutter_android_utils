@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -364,6 +365,31 @@ public class Utils {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    private static void openAppDetailSettings(Context context) {
+        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+        intent.setData(uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static boolean openXiaomiAppAdditionalSettings(@NotNull Context mContext) {
+        // This intent works on many Xiaomi devices to open the permissions editor.
+        try {
+            Intent intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+            intent.setClassName("com.miui.securitycenter",
+                    "com.miui.permcenter.permissions.PermissionsEditorActivity");
+            intent.putExtra("extra_pkgname", mContext.getPackageName());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            // Fallback: open the app's detail settings as a last resort
+            openAppDetailSettings(mContext);
         }
         return false;
     }

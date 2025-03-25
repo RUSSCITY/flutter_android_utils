@@ -197,4 +197,10 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
     final successful = await methodChannel.invokeMethod<bool>('openApp');
     return successful;
   }
+
+  @override
+  Future<bool?> openXiaomiAppAdditionalSettings() async {
+    final successful = await methodChannel.invokeMethod<bool>('openXiaomiAppAdditionalSettings');
+    return successful;
+  }
 }

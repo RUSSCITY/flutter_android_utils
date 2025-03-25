@@ -134,6 +134,8 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.getDeviceOpenId(mContext))
         } else if (call.method == "openApp") {
             result.success(Utils.openApp(mContext))
+        }  else if (call.method == "openXiaomiAppAdditionalSettings") {
+            result.success(Utils.openXiaomiAppAdditionalSettings(mContext))
         } else {
             result.notImplemented()
         }

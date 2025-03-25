@@ -142,4 +142,8 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
   Future<bool?> openApp() async {
     throw UnimplementedError('getDeviceOpenId() has not been implemented.');
   }
+
+  Future<bool?> openXiaomiAppAdditionalSettings() async {
+    throw UnimplementedError('getDeviceOpenId() has not been implemented.');
+  }
 }
