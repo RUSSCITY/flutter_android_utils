@@ -134,8 +134,13 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.getDeviceOpenId(mContext))
         } else if (call.method == "openApp") {
             result.success(Utils.openApp(mContext))
-        }  else if (call.method == "openXiaomiAppAdditionalSettings") {
+        } else if (call.method == "openXiaomiAppAdditionalSettings") {
             result.success(Utils.openXiaomiAppAdditionalSettings(mContext))
+        } else if (call.method == "isAutostartEnabled") {
+            val defaultValue = call.argument<Boolean>("defaultValue")
+            result.success(Utils.isAutostartEnabled(mContext, defaultValue))
+        } else if (call.method == "openAutostartSettings") {
+            result.success(Utils.openAutostartSettings(mContext))
         } else {
             result.notImplemented()
         }

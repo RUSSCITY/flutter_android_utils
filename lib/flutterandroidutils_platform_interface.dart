@@ -43,9 +43,20 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
         'isAccessibilityServiceProvided() has not been implemented.');
   }
 
+  Future<bool> isAutostartEnabled(bool defaultValue) {
+    throw UnimplementedError(
+        'isAutostartEnabled() has not been implemented.');
+  }
+
+  Future<bool> openAutostartSettings() {
+    throw UnimplementedError(
+        'openAutostartSettings() has not been implemented.');
+  }
+
+
   Future<void> openAccessibilityServiceSettings(String className) {
     throw UnimplementedError(
-        'isAccessibilityServiceProvided() has not been implemented.');
+        'openAccessibilityServiceSettings() has not been implemented.');
   }
 
   Future<bool> isScreenAccessProvided() {

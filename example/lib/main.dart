@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool? _accessibilityProvided;
   bool? _isScreenAccessProvided;
   bool? _notificationListenerEnabled;
+  bool _autoStartNeed = false;
   String? _deviceOpenId;
 
   // shared preferences
@@ -45,6 +46,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     initPlatformState();
     initStoredSharedPreferences();
+    initAutoStartSettings();
   }
 
   @override
@@ -57,7 +59,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       initPlatformState();
+      initAutoStartSettings();
     }
+  }
+
+  Future<void> initAutoStartSettings() async {
+    bool isEnabled = await FlutterAndroidUtils().isAutostartEnabled(true);
+    print("is autostart enabled: $isEnabled");
+    setState(() {
+      _autoStartNeed = !isEnabled;
+    });
   }
 
   Future sleep(int milliseconds) {
@@ -214,6 +225,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                         "city.russ.services.MyAccessibilityService");
                   },
                   child: Text("OPEN ACCESSIBILIY SERVICE SETTINGS")),
+              _autoStartNeed
+                  ? TextButton(
+                      onPressed: () async {
+                        _flutterandroidutilsPlugin.openAutostartSettings();
+                      },
+                      child: Text("OPEN AUTO START SETTINGS"))
+                  : Text("No need setup autostart"),
               TextButton(
                   onPressed: () async {
                     _flutterandroidutilsPlugin

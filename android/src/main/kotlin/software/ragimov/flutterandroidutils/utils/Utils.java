@@ -21,6 +21,12 @@ import java.lang.reflect.Method;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Locale;
 
 import java.util.Set;
 
@@ -28,6 +34,9 @@ import org.jetbrains.annotations.NotNull;
 
 import software.ragimov.flutterandroidutils.camera.MCameraManager;
 import software.ragimov.flutterandroidutils.receivers.DeviceOpenIdReceiver;
+
+import android.content.pm.ResolveInfo;
+import xyz.kumaraswamy.autostart.Autostart;
 
 public class Utils {
 
@@ -393,4 +402,34 @@ public class Utils {
         }
         return false;
     }
+
+    public static boolean openAutostartSettings(@NotNull Context mContext) {
+        try {
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(
+                    "com.miui.securitycenter",
+                    "com.miui.permcenter.autostart.AutoStartManagementActivity"));
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            PackageManager pm = mContext.getPackageManager();
+            List<ResolveInfo> acts = pm.queryIntentActivities(intent, 0);
+            if (!acts.isEmpty()) {
+                mContext.startActivity(intent);
+                return true;          // success
+            }
+        } catch (Exception e) {
+            Log.w("Utils.java",
+                    "Exception opening Xiaomi autostart settings", e);
+        }
+        openAppDetailSettings(mContext);        // graceful fallback
+        return false;
+    }
+
+
+    public static boolean isAutostartEnabled(Context ctx, Boolean defaultValue) {
+        Log.w("Utils.java", "isAutostartEnabled");
+        return Autostart.INSTANCE.getSafeState(ctx);
+    }
+
 }

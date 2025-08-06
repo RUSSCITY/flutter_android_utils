@@ -46,6 +46,20 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
   }
 
   @override
+  Future<bool> isAutostartEnabled(bool defaultValue) async {
+    final isEnabled = await methodChannel.invokeMethod<bool>(
+        'isAutostartEnabled', {'defaultValue': defaultValue});
+    return isEnabled ?? false;
+  }
+
+  Future<bool> openAutostartSettings() async {
+    final isOpened = await methodChannel.invokeMethod<bool>(
+        'openAutostartSettings');
+    return isOpened ?? false;
+  }
+
+
+  @override
   Future<bool> openAccessibilityServiceSettings(String className) async {
     final isProvided = await methodChannel.invokeMethod<bool>(
         'openAccessibilityServiceSettings', {'serviceClassName': className});

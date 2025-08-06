@@ -20,6 +20,15 @@ class FlutterAndroidUtils {
         .isAccessibilityServiceProvided(className);
   }
 
+  Future<bool> isAutostartEnabled(bool defaultValue) {
+    return FlutterandroidutilsPlatform.instance
+        .isAutostartEnabled(defaultValue);
+  }
+
+  Future<bool> openAutostartSettings() {
+    return FlutterandroidutilsPlatform.instance.openAutostartSettings();
+  }
+
   Future<void> openAccessibilityServiceSettings(String className) {
     return FlutterandroidutilsPlatform.instance
         .openAccessibilityServiceSettings(className);
@@ -103,18 +112,15 @@ class FlutterAndroidUtils {
   }
 
   Future<String?> getAndroidId() {
-    return FlutterandroidutilsPlatform.instance
-        .getAndroidId();
+    return FlutterandroidutilsPlatform.instance.getAndroidId();
   }
 
   Future<String?> getDeviceOpenId() {
-    return FlutterandroidutilsPlatform.instance
-        .getDeviceOpenId();
+    return FlutterandroidutilsPlatform.instance.getDeviceOpenId();
   }
 
   Future<bool?> openApp() {
-    return FlutterandroidutilsPlatform.instance
-        .openApp();
+    return FlutterandroidutilsPlatform.instance.openApp();
   }
 
   Future<bool?> openXiaomiAppAdditionalSettings() {
