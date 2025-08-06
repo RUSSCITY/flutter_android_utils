@@ -58,6 +58,11 @@ class MethodChannelFlutterandroidutils extends FlutterandroidutilsPlatform {
     return isOpened ?? false;
   }
 
+  Future<bool> openNotificationListenerSettings() async{
+    final isOpened = await methodChannel.invokeMethod<bool>(
+        'openNotificationListenerSettings');
+    return isOpened ?? false;
+  }
 
   @override
   Future<bool> openAccessibilityServiceSettings(String className) async {

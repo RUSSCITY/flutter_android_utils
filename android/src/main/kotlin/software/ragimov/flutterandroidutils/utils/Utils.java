@@ -386,6 +386,13 @@ public class Utils {
         context.startActivity(intent);
     }
 
+    public static boolean openNotificationListenerSettings(Context context) {
+        Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        return true;
+    }
+
     public static boolean openXiaomiAppAdditionalSettings(@NotNull Context mContext) {
         // This intent works on many Xiaomi devices to open the permissions editor.
         try {

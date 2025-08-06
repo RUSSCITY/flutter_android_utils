@@ -29,6 +29,10 @@ class FlutterAndroidUtils {
     return FlutterandroidutilsPlatform.instance.openAutostartSettings();
   }
 
+  Future<bool> openNotificationListenerSettings() {
+    return FlutterandroidutilsPlatform.instance.openNotificationListenerSettings();
+  }
+
   Future<void> openAccessibilityServiceSettings(String className) {
     return FlutterandroidutilsPlatform.instance
         .openAccessibilityServiceSettings(className);

@@ -141,6 +141,8 @@ class FlutterAndroidUtilsPlugin : FlutterPlugin, MethodCallHandler {
             result.success(Utils.isAutostartEnabled(mContext, defaultValue))
         } else if (call.method == "openAutostartSettings") {
             result.success(Utils.openAutostartSettings(mContext))
+        } else if (call.method == "openNotificationListenerSettings") {
+            result.success(Utils.openNotificationListenerSettings(mContext))
         } else {
             result.notImplemented()
         }

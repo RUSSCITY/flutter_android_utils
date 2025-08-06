@@ -53,6 +53,10 @@ abstract class FlutterandroidutilsPlatform extends PlatformInterface {
         'openAutostartSettings() has not been implemented.');
   }
 
+  Future<bool> openNotificationListenerSettings() {
+    throw UnimplementedError(
+        'openAutostartSettings() has not been implemented.');
+  }
 
   Future<void> openAccessibilityServiceSettings(String className) {
     throw UnimplementedError(

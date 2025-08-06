@@ -249,6 +249,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               Text('Is Screen access provided: $_isScreenAccessProvided'),
               TextButton(
                   onPressed: () async {
+                    _flutterandroidutilsPlugin.openNotificationListenerSettings();
+                  },
+                  child: Text("OPEN NOTIFICATION LISTENER")),
+              TextButton(
+                  onPressed: () async {
                     _flutterandroidutilsPlugin.requestScreenAccess();
                   },
                   child: Text("REQUEST SCREEN ACCESS")),
