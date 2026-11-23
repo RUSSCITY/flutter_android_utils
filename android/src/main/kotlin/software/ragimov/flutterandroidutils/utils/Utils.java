@@ -36,7 +36,6 @@ import software.ragimov.flutterandroidutils.camera.MCameraManager;
 import software.ragimov.flutterandroidutils.receivers.DeviceOpenIdReceiver;
 
 import android.content.pm.ResolveInfo;
-import xyz.kumaraswamy.autostart.Autostart;
 
 public class Utils {
 
@@ -434,9 +433,13 @@ public class Utils {
     }
 
 
+    /**
+     * The MIUI autostart state cannot be read with public APIs (it is a MIUI-only app op), and reading it
+     * through hidden APIs gets the app rejected by Google Play. So it is unknown: defaultValue is returned.
+     * Callers pass false to keep the "open settings" button visible.
+     */
     public static boolean isAutostartEnabled(Context ctx, Boolean defaultValue) {
-        Log.w("Utils.java", "isAutostartEnabled");
-        return Autostart.INSTANCE.getSafeState(ctx);
+        return defaultValue != null && defaultValue;
     }
 
 }

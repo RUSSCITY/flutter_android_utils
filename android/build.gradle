@@ -2,12 +2,10 @@ group 'software.ragimov.flutterandroidutils'
 version '1.0-SNAPSHOT'
 
 // Gradle 9 / AGP 9: no buildscript block (AGP and Kotlin come from the app's settings.gradle) and no
-// jcenter() - it no longer exists in Gradle 9. JitPack is only needed for MIUI-autostart and is declared
-// for this project only instead of being pushed into every project of the app.
+// jcenter() - it no longer exists in Gradle 9.
 repositories {
     google()
     mavenCentral()
-    maven { url 'https://jitpack.io' }
 }
 
 apply plugin: 'com.android.library'
@@ -41,6 +39,6 @@ android {
 dependencies {
     // kotlin-stdlib is added by the Kotlin Gradle plugin of the app
     implementation 'androidx.core:core-ktx:1.9.0'
-    // checking Xiaomi Autostart https://github.com/XomaDev/MIUI-Autostart
-    implementation 'com.github.XomaDev:MIUI-autostart:v1.3'
+    // No com.github.XomaDev:MIUI-autostart any more: it reads the MIUI autostart state through hidden
+    // APIs (reflection), which Google Play rejects ("app uses unsupported APIs", ART on Android 16).
 }
